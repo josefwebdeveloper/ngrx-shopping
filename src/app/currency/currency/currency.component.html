@@ -1,4 +1,19 @@
-<div>
-  <div>Default base currency: USD</div>
-  <div>Currencies: [ ILS ]</div>
+<div class="currency-container">
+  <form [formGroup]="currencyForm" class="currency-form-container">
+    <mat-form-field>
+      <mat-label>Show prices in:</mat-label>
+      <mat-select formControlName="currency">
+        <mat-option *ngFor="let symbol of currenciesList" [value]="symbol">
+          {{ symbol }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <div class="currency-update-container" *ngIf="(currency$ | async)?.date">
+    <div>Last Successful Update:</div>
+    <div>{{ updateTimestamp$ | async | date: "'on' dd.MM.yyyy 'at' hh:mm:ss" }}</div>
+  </div>
+  <mat-chip-list *ngIf="(currency$ | async)?.date" class="currency-rate-container">
+    <mat-chip color="accent" selected>{{1 | currency: (currency$ | async).base }} = {{(currency$ | async).rates.ILS | currency: 'ILS'}}</mat-chip>
+  </mat-chip-list>
 </div>
