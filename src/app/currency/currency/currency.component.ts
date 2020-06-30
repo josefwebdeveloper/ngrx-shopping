@@ -21,7 +21,7 @@ import { Currency } from '../models/currency';
 export class CurrencyComponent implements OnInit {
   currenciesList = ['ILS', 'USD'];
 
-  updateTimestamp$: Observable<Date>;
+  updateTimestamp$: Observable<string>;
   currency$: Observable<Currency>;
 
   currencyForm: FormGroup;

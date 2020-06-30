@@ -12,7 +12,7 @@ export const currencyFetchStart = createAction(
 
 export const currencyFetchSuccess = createAction(
   '[Currency] Currency Fetch Success',
-  props<{ currency: Currency; successTime: Date }>()
+  props<{ currency: Currency; successTimeString: string }>()
 );
 
 export const currencyFetchFail = createAction(

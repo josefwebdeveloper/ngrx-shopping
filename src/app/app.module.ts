@@ -13,6 +13,7 @@ import { CurrencyModule } from './currency/currency.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
 import { HeaderComponent } from './components/header/header.component';
+import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
 
 
 @NgModule({
@@ -27,9 +28,21 @@ import { HeaderComponent } from './components/header/header.component';
     MaterialModule,
     HttpClientModule,
     CurrencyModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks : {
+          strictStateImmutability: true,
+          strictActionImmutability: true,
+          strictActionSerializability: true,
+          strictStateSerializability:true
+      }
+  }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot({
+        stateKey: 'router',
+        routerState: RouterState.Minimal
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

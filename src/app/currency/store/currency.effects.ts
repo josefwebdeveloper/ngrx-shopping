@@ -44,9 +44,10 @@ export class CurrencyEffects {
                   const successTime = this.requestsCounter === 1 && JSON.parse(localStorage.getItem('successTime'))
                     ? new Date(JSON.parse(localStorage.getItem('successTime')))
                     : new Date();
-                  localStorage.setItem('successTime', JSON.stringify(successTime))
-                  console.log({currency, successTime})
-                  return CurrencyActions.currencyFetchSuccess({ currency, successTime });
+                    const successTimeString = successTime.toISOString();
+                  localStorage.setItem('successTime', JSON.stringify(successTimeString))
+                  console.log({currency, successTimeString})
+                  return CurrencyActions.currencyFetchSuccess({ currency, successTimeString });
                 }),
                 catchError((errorResponse: HttpErrorResponse) => {
                   return of(

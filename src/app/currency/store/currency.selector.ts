@@ -15,6 +15,6 @@ export const currencyUpdated = createSelector(
 export const currencySuccessTimeUpdated = createSelector(
   selectCurrencyState,
   (currency) => {
-    return currency.successTime;
+    return currency.successTimeString;
   }
 );

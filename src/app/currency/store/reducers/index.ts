@@ -15,12 +15,12 @@ export const currencyFeatureKey = 'currency';
 
 export interface CurrencyState {
   currency: Currency;
-  successTime: Date;
+  successTimeString: string;
 }
 
 const initialCurrencyState: CurrencyState = {
   currency: undefined,
-  successTime: undefined,
+  successTimeString: undefined,
 };
 
 export const metaReducers: MetaReducer<
@@ -32,7 +32,7 @@ export const currencyReducer = createReducer(
   on(CurrencyActions.currencyFetchSuccess, (state, action) => {
     return {
       currency: action.currency,
-      successTime: action.successTime
+      successTimeString: action.successTimeString
     };
   })
 );
