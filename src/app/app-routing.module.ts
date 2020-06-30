@@ -4,7 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'courses',
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'shopping'
+  },
+  {
+    path: 'shopping',
     loadChildren: () => import('./shopping/shopping.module').then(m => m.ShoppingModule)
   },
   {

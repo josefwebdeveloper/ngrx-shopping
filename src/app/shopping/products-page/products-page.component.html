@@ -1,0 +1,22 @@
+<div>
+  <mat-card *ngFor="let product of allProducts$ | async">
+    <mat-card-header>
+      <mat-card-title>{{ product.name }}</mat-card-title>
+      <mat-card-subtitle>{{ product.shop.name }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div>Price: {{ (product.price.usd | currency: "USD") || (product.price.ils | currency: "ILS") }}</div>
+      <div>
+        Estimated Delivery: {{ product.deliveryEstDate | date: "dd.MM.yyyy" }}
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-mini-fab color="accent">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-mini-fab color="warn">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
