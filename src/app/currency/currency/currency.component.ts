@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { CurrencyService } from '../currency.service';
 import { Store, select } from '@ngrx/store';
-import { AppState } from 'src/app/reducers';
-import { currencyFetched } from '../store/currency.actions';
+import {
+  currencyFetchSuccess,
+  currencyFetchStart,
+} from '../store/currency.actions';
 import { Observable } from 'rxjs';
 import { CurrencyState } from '../store/reducers';
-import { map, tap } from 'rxjs/operators';
-import { currencyUpdated, currencyRatesUpdated } from '../store/currency.selector';
+import {
+  currencyUpdated,
+  currencySuccessTimeUpdated,
+} from '../store/currency.selector';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Currency } from '../models/currency';
 
@@ -22,12 +25,18 @@ export class CurrencyComponent implements OnInit {
   currency$: Observable<Currency>;
 
   currencyForm: FormGroup;
+  intervalsList = [
+    3000, // 3s
+    10000, // 10s
+    30000, // 30s
+    60000, // 1m
+    120000, // 2m
+    300000, // 5m
+    600000, // 10m
+    1800000, // 30m
+  ];
 
-  constructor(
-    private fb: FormBuilder,
-    private currencyService: CurrencyService,
-    private store: Store<CurrencyState>
-  ) {}
+  constructor(private fb: FormBuilder, private store: Store<CurrencyState>) {}
 
   ngOnInit(): void {
     this.currencyForm = this.fb.group({
@@ -35,24 +44,22 @@ export class CurrencyComponent implements OnInit {
         Validators.required,
         Validators.pattern(/^[A-Z]{3}$/g),
       ]),
+      updateInterval: this.fb.control(this.intervalsList[0], [])// add validator function to check values
     });
     this.getCurrency();
-    this.updateTimestamp$ = this.store.pipe(select(currencyUpdated));
-    this.currency$ = this.store.pipe(select(currencyRatesUpdated));
-    this.store
-      .pipe(select(currencyRatesUpdated))
-      .subscribe((r) => console.log(r));
+    this.updateTimestamp$ = this.store.pipe(select(currencySuccessTimeUpdated));
+    this.currency$ = this.store.pipe(select(currencyUpdated));
   }
 
   getCurrency(symbols = this.currenciesList) {
-    debugger
-    const currency = localStorage.getItem('currency');
-    if (currency) {
-      this.store.dispatch(currencyFetched({ currency: JSON.parse(currency) }));
-    }
-
-    this.currencyService.getCurrencyRates(symbols).subscribe((currency) => {
-      // console.log(currency);
-    });
+    this.store.dispatch(
+      currencyFetchStart({
+        currencyRequestParams: {
+          baseCurrencySymbol: 'USD',
+          convertionCurrencySymbol: 'ILS',
+          fetchInterval: 2000,
+        },
+      })
+    );
   }
 }

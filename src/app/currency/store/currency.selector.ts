@@ -8,13 +8,13 @@ export const selectCurrencyState = createFeatureSelector<CurrencyState>(
 export const currencyUpdated = createSelector(
   selectCurrencyState,
   (currency) => {
-    return currency.lastSuccessfulUpdate;
+    return currency.currency;
   }
 );
 
-export const currencyRatesUpdated = createSelector(
+export const currencySuccessTimeUpdated = createSelector(
   selectCurrencyState,
   (currency) => {
-    return currency.currencyRates;
+    return currency.successTime;
   }
 );

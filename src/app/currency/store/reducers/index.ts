@@ -14,16 +14,14 @@ import { CurrencyActions } from '../../store/action.types';
 export const currencyFeatureKey = 'currency';
 
 export interface CurrencyState {
-  currencyRates: Currency;
-  lastSuccessfulUpdate: Date;
+  currency: Currency;
+  successTime: Date;
 }
 
 const initialCurrencyState: CurrencyState = {
-  currencyRates: undefined,
-  lastSuccessfulUpdate: undefined,
+  currency: undefined,
+  successTime: undefined,
 };
-
-// export const reducers: ActionReducerMap<CurrencyState> = {};
 
 export const metaReducers: MetaReducer<
   CurrencyState
@@ -31,13 +29,10 @@ export const metaReducers: MetaReducer<
 
 export const currencyReducer = createReducer(
   initialCurrencyState,
-  on(CurrencyActions.currencyFetched, (state, action) => {
-    console.log(state)
-    console.log(action)
-    const fetchSuccessTimestamp = new Date();
+  on(CurrencyActions.currencyFetchSuccess, (state, action) => {
     return {
-      currencyRates: action.currency,
-      lastSuccessfulUpdate: fetchSuccessTimestamp
+      currency: action.currency,
+      successTime: action.successTime
     };
   })
 );
