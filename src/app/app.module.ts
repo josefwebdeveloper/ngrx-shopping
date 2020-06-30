@@ -12,14 +12,13 @@ import { environment } from '../environments/environment';
 import { CurrencyModule } from './currency/currency.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
-import { HeaderComponent } from './components/header/header.component';
 import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
+import { LayoutModule } from '@angular/cdk/layout';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +41,8 @@ import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
     StoreRouterConnectingModule.forRoot({
         stateKey: 'router',
         routerState: RouterState.Minimal
-    })
+    }),
+    LayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

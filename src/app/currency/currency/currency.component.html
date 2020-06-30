@@ -1,7 +1,14 @@
+<div class="currency-rate-container">
+  <mat-chip-list *ngIf="(currency$ | async)?.date">
+    <mat-chip color="accent" selected>
+      {{ 1 | currency: (currency$ | async).base }} =
+      {{ (currency$ | async).rates.ILS | currency: "ILS" }}
+    </mat-chip>
+  </mat-chip-list>
+</div>
 
-
-<mat-toolbar-row class="currency-row">
-  <form [formGroup]="currencyForm" class="currency-form-container">
+<form [formGroup]="currencyForm" class="currency-form-container">
+  <div>
     <mat-form-field>
       <mat-label>Show prices in:</mat-label>
       <mat-select formControlName="currency">
@@ -10,25 +17,26 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </div>
+
+  <div>
     <mat-form-field>
       <mat-label>Update every:</mat-label>
       <mat-select formControlName="updateInterval">
         <mat-option *ngFor="let interval of intervalsList" [value]="interval">
-          {{ interval | date:'mm:ss' }}
+          {{ interval | date: "mm:ss" }}
         </mat-option>
       </mat-select>
       <mat-hint>seconds</mat-hint>
     </mat-form-field>
-  </form>
-</mat-toolbar-row>
+  </div>
+</form>
 
 <div class="currency-container">
-
   <div class="currency-update-container" *ngIf="(currency$ | async)?.date">
     <div>Last Successful Update:</div>
-    <div>{{ updateTimestamp$ | async | date: "'on' dd.MM.yyyy 'at' HH:mm:ss" }}</div>
+    <div>
+      {{ updateTimestamp$ | async | date: "'on' dd.MM.yyyy 'at' HH:mm:ss" }}
+    </div>
   </div>
-  <mat-chip-list *ngIf="(currency$ | async)?.date" class="currency-rate-container">
-    <mat-chip color="accent" selected>{{1 | currency: (currency$ | async).base }} = {{(currency$ | async).rates.ILS | currency: 'ILS'}}</mat-chip>
-  </mat-chip-list>
 </div>

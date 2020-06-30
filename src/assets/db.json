@@ -10,6 +10,7 @@
       "usd": 2.17,
       "ils": null
     },
+    "received": false,
     "deliveryEstDate": "2020-06-30T20:08:21.395Z"
   },
   {
@@ -23,6 +24,7 @@
       "usd": 4.7,
       "ils": null
     },
+    "received": false,
     "deliveryEstDate": "2020-07-02T20:08:21.395Z"
   },
   {
@@ -36,6 +38,7 @@
       "usd": null,
       "ils": 25
     },
+    "received": false,
     "deliveryEstDate": "2020-06-29T20:08:21.395Z"
   }
 ]

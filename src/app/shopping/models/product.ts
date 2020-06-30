@@ -4,6 +4,7 @@ export interface Product {
   name: string;
   shop: Shop;
   price: Price;
+  received: boolean;
   deliveryEstDate: string;
 }
 
