@@ -35,7 +35,7 @@
     "price": {
       "USD": 25
     },
-    "received": false,
+    "received": true,
     "deliveryEstDate": "2020-06-29T20:08:21.395Z"
   }
 ]

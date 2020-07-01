@@ -13,5 +13,10 @@ export const allProductsLoaded = createAction(
 
 export const productReceived = createAction(
   '[Products List] Product Received',
-  props<{update: Update<Product>}>()
-)
+  props<{ update: Update<Product> }>()
+);
+
+export const productDeleted = createAction(
+  '[Products List] Product Deleted',
+  props<{ id: string }>()
+);

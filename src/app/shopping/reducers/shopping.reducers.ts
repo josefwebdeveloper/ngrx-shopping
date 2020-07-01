@@ -24,7 +24,13 @@ export const productsReducer = createReducer(
       ...state,
       allProductsLoaded: true,
     });
-  })
+  }),
+  on(ShoppingActions.productReceived, (state, { update }) => {
+    return adapter.updateOne(update, state);
+  }),
+  on(ShoppingActions.productDeleted, (state, { id }) => {
+    return adapter.removeOne(id, state);
+  }),
 );
 
 export const { selectAll } = adapter.getSelectors();

@@ -28,4 +28,7 @@
   .nav-link:not(:first-of-type) {
     margin-left: 1em;
   }
+  .active-nav-link {
+    color: white;
+  }
 }
