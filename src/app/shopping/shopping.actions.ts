@@ -11,6 +11,11 @@ export const allProductsLoaded = createAction(
   props<{ products: Product[] }>()
 );
 
+export const productAdded = createAction(
+  '[Add Product] Add Product',
+  props<{ product: Product }>()
+);
+
 export const productReceived = createAction(
   '[Products List] Product Received',
   props<{ update: Update<Product> }>()

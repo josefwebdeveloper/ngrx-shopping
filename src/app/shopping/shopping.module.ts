@@ -13,6 +13,8 @@ import { MaterialModule } from '../material.module';
 import { ConvertCurrencyPipe } from './pipes/convert-currency.pipe';
 import { ShopsListComponent } from './shops-list/shops-list.component';
 import { shopsReducer } from './reducers/shops.reducers';
+import { AddProductComponent } from './add-product/add-product.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,11 +23,13 @@ import { shopsReducer } from './reducers/shops.reducers';
     ProductComponent,
     ConvertCurrencyPipe,
     ShopsListComponent,
+    AddProductComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     ShoppingRoutingModule,
+    ReactiveFormsModule,
     StoreModule.forFeature('products', productsReducer),
     StoreModule.forFeature('shops', shopsReducer),
     EffectsModule.forFeature([ShoppingEffects]),

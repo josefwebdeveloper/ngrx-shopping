@@ -22,6 +22,9 @@ export const productsReducer = createReducer(
       allProductsLoaded: true,
     });
   }),
+  on(ShoppingActions.productAdded, (state, action) => {
+    return adapter.addOne(action.product, state);
+  }),
   on(ShoppingActions.productReceived, (state, { update }) => {
     return adapter.updateOne(update, state);
   }),

@@ -23,6 +23,8 @@ export class ProductsPageComponent implements OnInit {
   allProducts$: Observable<Product[]>;
   allShops$: Observable<Shop[]>;
 
+  receivedList: boolean;
+
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -33,6 +35,7 @@ export class ProductsPageComponent implements OnInit {
   getInitialProducts() {
     this.store.pipe(select(selectUrl), first()).subscribe((url) => {
       if (url.includes('received')) {
+        this.receivedList = true;
         this.allProducts$ = this.store.pipe(
           select(selectAllProducts),
           map((products) => {
@@ -47,6 +50,7 @@ export class ProductsPageComponent implements OnInit {
           })
         );
       } else {
+        this.receivedList = false;
         this.allProducts$ = this.store.pipe(
           select(selectAllProducts),
           map((products) => {
