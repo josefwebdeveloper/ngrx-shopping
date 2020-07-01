@@ -3,8 +3,8 @@ import { ShoppingService } from '../shopping.service';
 import { AppState } from 'src/app/reducers';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Product } from '../models/product';
-import { selectAllProducts } from '../shopping.selectors';
+import { Product, Shop } from '../models/product';
+import { selectAllProducts, selectAllShops } from '../shopping.selectors';
 import {
   currentShowCurrency,
   currencyUpdated,
@@ -19,19 +19,18 @@ import { selectCurrentRoute, selectUrl } from 'src/app/router-store';
   styleUrls: ['./products-page.component.scss'],
 })
 export class ProductsPageComponent implements OnInit {
-  allProducts$: Observable<Product[]>;
-  receivedProducts$: Observable<Product[]>;
   currencyUpdated$: Observable<Currency>;
+  allProducts$: Observable<Product[]>;
+  allShops$: Observable<Shop[]>;
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
+    this.currencyUpdated$ = this.store.pipe(select(currencyUpdated));
     this.getInitialProducts();
   }
 
   getInitialProducts() {
-    this.currencyUpdated$ = this.store.pipe(select(currencyUpdated));
-
     this.store.pipe(select(selectUrl), first()).subscribe((url) => {
       if (url.includes('received')) {
         this.allProducts$ = this.store.pipe(
@@ -40,11 +39,26 @@ export class ProductsPageComponent implements OnInit {
             return products.filter((product) => product.received);
           })
         );
+
+        this.allShops$ = this.store.pipe(
+          select(selectAllShops),
+          map((shops) => {
+            return shops.filter((shop) => shop.totalReceivedProducts > 0);
+          })
+        );
       } else {
         this.allProducts$ = this.store.pipe(
           select(selectAllProducts),
           map((products) => {
             return products.filter((product) => !product.received);
+          })
+        );
+
+        this.allShops$ = this.store.pipe(
+          select(selectAllShops),
+          map((shops) => {
+            console.log(shops)
+            return shops.filter((shop) => shop.totalProducts > shop.totalReceivedProducts);
           })
         );
       }

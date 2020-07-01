@@ -20,6 +20,7 @@ export const shopsReducer = createReducer(
     });
   }),
   on(ShoppingActions.shopUpdated, (state, { update }) => {
+    console.log(update)
     return adapter.updateOne(update, state);
   })
 );

@@ -4,12 +4,16 @@
       <app-products-list
         [currencyUpdated]="currencyUpdated$ | async"
         [products]="allProducts$ | async"
+        [shops]="allShops$ | async"
       ></app-products-list>
     </ng-template>
   </mat-tab>
   <mat-tab label="Stores">
     <ng-template matTabContent>
-      <app-shops-list></app-shops-list>
+      <app-shops-list
+        [currencyUpdated]="currencyUpdated$ | async"
+        [shops]="allShops$ | async"
+      ></app-shops-list>
     </ng-template>
   </mat-tab>
 </mat-tab-group>

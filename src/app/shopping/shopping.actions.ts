@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Product, Shop, AgregatedShopData } from './models/product';
+import { Product, Shop } from './models/product';
 import { Update } from '@ngrx/entity';
 
 export const loadAllProducts = createAction(
@@ -27,7 +27,7 @@ export const loadAllShops = createAction(
 
 export const allShopsLoaded = createAction(
   '[Load Shops Effect] All Shops Loaded',
-  props<{ shops: AgregatedShopData[] }>()
+  props<{ shops: Shop[] }>()
 );
 
 export const shopUpdated = createAction(

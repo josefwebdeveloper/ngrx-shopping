@@ -1,3 +1,17 @@
-<div *ngFor="let shop of shops">
-  <div>{{ shop.name }}</div>
-</div>
+<mat-card *ngFor="let shop of shops">
+  <mat-card-header>
+    <mat-card-title>{{ shop.name }}</mat-card-title>
+  </mat-card-header>
+  <!-- 
+        "totalProducts": 2,
+    "totalReceivedProducts": 0,
+    "totalValue": 6.87,
+    "totalValueReceived": 0
+   -->
+  <mat-card-content>
+    <div>Total Products: {{ shop.totalProducts }}</div>
+    <div>Total Received Products: {{ shop.totalReceivedProducts }}</div>
+    <div>Total Value: {{ shop.totalValue.USD | convertCurrency: currencyUpdated }}</div>
+    <div>Total Value Received: {{ shop.totalReceivedValue.USD | convertCurrency: currencyUpdated }}</div>
+  </mat-card-content>
+</mat-card>

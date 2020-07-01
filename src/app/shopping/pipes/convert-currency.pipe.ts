@@ -10,6 +10,7 @@ export class ConvertCurrencyPipe implements PipeTransform {
   constructor(private currencyPipe: CurrencyPipe){}
 
   transform(value: number, convertionCurrency: Currency): unknown {
+    console.log(value)
     if (convertionCurrency) {
       const converted = value * Object.values(convertionCurrency.rates)[0];
       return this.currencyPipe.transform(converted, Object.keys(convertionCurrency.rates)[0], );

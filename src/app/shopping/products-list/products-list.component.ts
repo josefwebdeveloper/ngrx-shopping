@@ -5,10 +5,14 @@ import {
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { Currency } from 'src/app/currency/models/currency';
-import { Product } from '../models/product';
+import { Product, Shop } from '../models/product';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/reducers';
-import { productReceived, productDeleted } from '../shopping.actions';
+import {
+  productReceived,
+  productDeleted,
+  shopUpdated,
+} from '../shopping.actions';
 import { Update } from '@ngrx/entity';
 
 @Component({
@@ -19,26 +23,77 @@ import { Update } from '@ngrx/entity';
 export class ProductsListComponent implements OnInit {
   @Input() currencyUpdated: Currency;
   @Input() products: Product[];
+  @Input() shops: Shop[];
 
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {}
 
   checkToggled(product: Product) {
+    const isReceived = !product.received;
     const updatedProduct: Product = {
       ...product,
-      received: !product.received,
+      received: isReceived,
+    };
+    const originalShop = this.shops.find((shop) => shop.id === product.shop.id);
+    console.log(originalShop);
+    console.log(product.price.USD);
+
+    const updatedShop: Shop = {
+      ...originalShop,
+
+      totalReceivedProducts: !isReceived
+        ? originalShop.totalReceivedProducts > 0
+          ? originalShop.totalReceivedProducts - 1
+          : originalShop.totalReceivedProducts
+        : originalShop.totalReceivedProducts + 1,
+      totalReceivedValue: {
+        USD: isReceived
+          ? originalShop.totalReceivedValue.USD + product.price.USD
+          : originalShop.totalReceivedValue.USD - product.price.USD,
+      },
     };
 
-    const update: Update<Product> = {
+    const productUpdate: Update<Product> = {
       id: product.id,
       changes: updatedProduct,
     };
 
-    this.store.dispatch(productReceived({ update }));
+    const shopUpdate: Update<Shop> = {
+      id: product.shop.id,
+      changes: updatedShop,
+    };
+
+    this.store.dispatch(productReceived({ update: { ...productUpdate } }));
+    this.store.dispatch(shopUpdated({ update: { ...shopUpdate } }));
   }
 
   deleteItem(product: Product) {
+    const originalShop = this.shops.find((shop) => shop.id === product.shop.id);
+
+    const updatedShop: Shop = {
+      ...originalShop,
+      totalValue: {
+        USD: originalShop.totalValue.USD - product.price.USD,
+      },
+      totalProducts: originalShop.totalProducts - 1,
+
+      totalReceivedProducts: product.received
+        ? originalShop.totalReceivedProducts - 1
+        : originalShop.totalReceivedProducts,
+      totalReceivedValue: {
+        USD: product.received
+          ? originalShop.totalReceivedValue.USD - product.price.USD
+          : originalShop.totalReceivedValue.USD,
+      },
+    };
+
+    const shopUpdate: Update<Shop> = {
+      id: product.shop.id,
+      changes: updatedShop,
+    };
+
     this.store.dispatch(productDeleted({ id: product.id }));
+    this.store.dispatch(shopUpdated({ update: { ...shopUpdate } }));
   }
 }
