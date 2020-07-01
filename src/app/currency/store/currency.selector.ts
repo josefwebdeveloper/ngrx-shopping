@@ -28,3 +28,10 @@ export const currencySuccessTimeUpdated = createSelector(
     return currency.successTimeString;
   }
 );
+
+export const currencyError = createSelector(
+  selectCurrencyState,
+  (currency) => {
+    return currency.currencyError;
+  }
+);

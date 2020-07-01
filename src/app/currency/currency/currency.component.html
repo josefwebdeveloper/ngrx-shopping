@@ -1,11 +1,11 @@
 <div class="currency-rate-container">
   <mat-chip-list *ngIf="(currency$ | async)?.date">
     <mat-chip color="warn" selected>
-      Base Currency: USD
+      Base Currency: {{(currency$ | async).base}}
     </mat-chip>
-    <mat-chip color="accent" selected>
+    <mat-chip color="accent" selected *ngIf="currencyForm.valid">
       {{ 1 | currency: (currency$ | async).base }} =
-      {{ (currency$ | async).rates.ILS | currency: "ILS" }}
+      {{ (currency$ | async).rates[currencyForm.value.convertionCurrency] | currency: currencyForm.value.convertionCurrency }}
     </mat-chip>
   </mat-chip-list>
 </div>

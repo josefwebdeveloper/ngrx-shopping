@@ -25,7 +25,7 @@ import { timeIntervalValidator } from 'src/app/shopping/utilities/timeInterval.v
   styleUrls: ['./currency.component.scss'],
 })
 export class CurrencyComponent implements OnInit {
-  currenciesList = ['ILS', 'USD'];
+  currenciesList = ['ILS', 'USD', '999'];
   intervalsList = [
     3000, // 3s
     10000, // 10s

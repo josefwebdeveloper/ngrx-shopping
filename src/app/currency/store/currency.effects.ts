@@ -8,6 +8,7 @@ import {
   catchError,
   take,
   startWith,
+  concatMap,
 } from 'rxjs/operators';
 import {
   CurrencyRequestParams,
@@ -22,16 +23,28 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CurrencyEffects {
   requestsCounter = 1;
 
+  currencyFailed$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(CurrencyActions.currencyFetchFail),
+        map((errorMsg) => {
+          this.snackbar.open(errorMsg.currencyError.error, 'X');
+        })
+      ),
+    { dispatch: false }
+  );
+
   currencyFetch$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CurrencyActions.currencyFetchStart),
       map((action) => action.currencyRequestParams),
       switchMap((currencyRequestParams: CurrencyRequestParams) => {
-        const initialCurrencyData: Currency = JSON.parse(localStorage.getItem('currency'))
+        const initialCurrencyData: Currency = JSON.parse(
+          localStorage.getItem('currency')
+        );
         return interval(currencyRequestParams.fetchInterval).pipe(
           tap(() => this.requestsCounter++),
           startWith(initialCurrencyData),
-          take(4),
           switchMap(() =>
             this.http
               .get<Currency>(
@@ -39,13 +52,24 @@ export class CurrencyEffects {
               )
               .pipe(
                 map((currency) => {
-                  localStorage.setItem('currency', JSON.stringify(currency))
-                  const successTime = this.requestsCounter === 1 && JSON.parse(localStorage.getItem('successTime'))
-                    ? new Date(JSON.parse(localStorage.getItem('successTime')))
-                    : new Date();
-                    const successTimeString = successTime.toISOString();
-                  localStorage.setItem('successTime', JSON.stringify(successTimeString))
-                  return CurrencyActions.currencyFetchSuccess({ currency, successTimeString });
+                  this.snackbar.dismiss();
+                  localStorage.setItem('currency', JSON.stringify(currency));
+                  const successTime =
+                    this.requestsCounter === 1 &&
+                    JSON.parse(localStorage.getItem('successTime'))
+                      ? new Date(
+                          JSON.parse(localStorage.getItem('successTime'))
+                        )
+                      : new Date();
+                  const successTimeString = successTime.toISOString();
+                  localStorage.setItem(
+                    'successTime',
+                    JSON.stringify(successTimeString)
+                  );
+                  return CurrencyActions.currencyFetchSuccess({
+                    currency,
+                    successTimeString,
+                  });
                 }),
                 catchError((errorResponse: HttpErrorResponse) => {
                   return of(
@@ -63,5 +87,9 @@ export class CurrencyEffects {
     )
   );
 
-  constructor(private actions$: Actions, private http: HttpClient) {}
+  constructor(
+    private actions$: Actions,
+    private http: HttpClient,
+    private snackbar: MatSnackBar
+  ) {}
 }
