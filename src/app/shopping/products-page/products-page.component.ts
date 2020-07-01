@@ -12,6 +12,7 @@ import {
 import { Currency } from 'src/app/currency/models/currency';
 import { filter, map, switchMap, first } from 'rxjs/operators';
 import { selectCurrentRoute, selectUrl } from 'src/app/router-store';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-products-page',
@@ -25,11 +26,17 @@ export class ProductsPageComponent implements OnInit {
 
   receivedList: boolean;
 
+  activeTab: number;
+
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.currencyUpdated$ = this.store.pipe(select(currencyUpdated));
     this.getInitialProducts();
+  }
+
+  onTabChanged(event: MatTabChangeEvent) {
+    this.activeTab = event.index;
   }
 
   getInitialProducts() {

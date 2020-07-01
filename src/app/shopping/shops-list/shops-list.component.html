@@ -1,13 +1,7 @@
-<mat-card *ngFor="let shop of shops">
+<mat-card *ngFor="let shop of shops" class="shop-card">
   <mat-card-header>
     <mat-card-title>{{ shop.name }}</mat-card-title>
   </mat-card-header>
-  <!-- 
-        "totalProducts": 2,
-    "totalReceivedProducts": 0,
-    "totalValue": 6.87,
-    "totalValueReceived": 0
-   -->
   <mat-card-content>
     <div>Total Products: {{ shop.totalProducts }}</div>
     <div>Total Received Products: {{ shop.totalReceivedProducts }}</div>

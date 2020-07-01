@@ -3,6 +3,7 @@ import {
   OnInit,
   Input,
   ChangeDetectionStrategy,
+  HostBinding,
 } from '@angular/core';
 import { Currency } from 'src/app/currency/models/currency';
 import { Product, Shop } from '../models/product';
@@ -24,6 +25,8 @@ export class ProductsListComponent implements OnInit {
   @Input() currencyUpdated: Currency;
   @Input() products: Product[];
   @Input() shops: Shop[];
+
+  // @HostBinding('style.grid-template-columns') gridColumns: string;
 
   constructor(private store: Store<AppState>) {}
 

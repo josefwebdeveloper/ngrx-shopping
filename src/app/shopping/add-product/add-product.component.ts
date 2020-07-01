@@ -22,7 +22,6 @@ import { MatInput } from '@angular/material/input';
   styleUrls: ['./add-product.component.scss'],
 })
 export class AddProductComponent implements OnInit, OnDestroy {
-  @Input() received: boolean;
 
   allShops$: Subscription;
   allShops: Shop[];
@@ -61,7 +60,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
       price: {
         USD: this.addProductForm.value.priceUSD,
       },
-      received: this.received,
+      received: false,
       deliveryEstDate: new Date(
         this.addProductForm.value.deliveryEstDate
       ).toISOString(),
@@ -69,7 +68,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
         (shop) => shop.id === this.addProductForm.value.shopId
       ),
     };
-    console.log(this.received)
     const updatedShop = {
       ...newProduct.shop,
       totalValue: {
@@ -98,9 +96,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
   }
 
   onResetForm() {
-    this.addProductForm.patchValue({
-      received: this.received,
-    });
     this.addProductForm.enable();
     this.submitted = false;
   }
