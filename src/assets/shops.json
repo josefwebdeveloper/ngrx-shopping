@@ -1,0 +1,18 @@
+[
+  {
+    "id": "s1",
+    "name": "shop 1",
+    "totalProducts": 2,
+    "totalReceivedProducts": 0,
+    "totalValue": 6.87,
+    "totalValueReceived": 0
+  },
+  {
+    "id": "s2",
+    "name": "shop 2",
+    "totalProducts": 1,
+    "totalReceivedProducts": 1,
+    "totalValue": 25,
+    "totalValueReceived": 25
+  }
+]

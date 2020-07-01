@@ -4,7 +4,7 @@ import { AppState } from 'src/app/reducers';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product';
-import { selectAllProducts } from '../products.selectors';
+import { selectAllProducts } from '../shopping.selectors';
 import {
   currentShowCurrency,
   currencyUpdated,

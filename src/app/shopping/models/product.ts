@@ -11,10 +11,10 @@ export interface Product {
 export interface Shop {
   id: number;
   name: string;
-}
-
-export interface AgregatedShopInfo extends Shop {
-  productsSum: Price;
+  totalProducts: number;
+  totalReceivedProducts: number;
+  totalValue: Price;
+  totalReceivedValue: Price;
 }
 
 export interface Price {

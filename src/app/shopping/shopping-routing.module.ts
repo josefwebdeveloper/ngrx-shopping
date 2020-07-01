@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProductsPageComponent } from './products-page/products-page.component';
 import { ProductsGuard } from './guards/products.guard';
-import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   { 
@@ -11,10 +10,6 @@ const routes: Routes = [
     resolve: {
       products: ProductsGuard
     }
-  },
-  { 
-    path: 'test', 
-    component: TestComponent,
   }
 ];
 
