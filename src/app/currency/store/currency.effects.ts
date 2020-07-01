@@ -14,7 +14,7 @@ import {
   Currency,
   CurrencyError,
 } from '../models/currency';
-import { interval, of } from 'rxjs';
+import { interval, of, combineLatest } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -35,7 +35,6 @@ export class CurrencyEffects {
           switchMap(() =>
             this.http
               .get<Currency>(
-                // `https://api.exchangeratesapi.io/latest?symbols=${this.requestsCounter === 3 ? '9999999' : currencyRequestParams.convertionCurrencySymbol}&base=${currencyRequestParams.baseCurrencySymbol}`
                 `https://api.exchangeratesapi.io/latest?symbols=${currencyRequestParams.convertionCurrencySymbol}&base=${currencyRequestParams.baseCurrencySymbol}`
               )
               .pipe(
@@ -46,7 +45,6 @@ export class CurrencyEffects {
                     : new Date();
                     const successTimeString = successTime.toISOString();
                   localStorage.setItem('successTime', JSON.stringify(successTimeString))
-                  console.log({currency, successTimeString})
                   return CurrencyActions.currencyFetchSuccess({ currency, successTimeString });
                 }),
                 catchError((errorResponse: HttpErrorResponse) => {

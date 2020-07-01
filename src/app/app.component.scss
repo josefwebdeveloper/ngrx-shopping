@@ -19,3 +19,13 @@
   top: 0;
   z-index: 1;
 }
+
+.nav-container {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  margin-left: auto;
+  .nav-link:not(:first-of-type) {
+    margin-left: 1em;
+  }
+}

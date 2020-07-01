@@ -9,7 +9,11 @@ const routes: Routes = [
     redirectTo: 'shopping'
   },
   {
-    path: 'shopping',
+    path: 'list',
+    loadChildren: () => import('./shopping/shopping.module').then(m => m.ShoppingModule)
+  },
+  {
+    path: 'received',
     loadChildren: () => import('./shopping/shopping.module').then(m => m.ShoppingModule)
   },
   {

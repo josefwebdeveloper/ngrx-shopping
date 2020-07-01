@@ -18,6 +18,5 @@ export interface AgregatedShopInfo extends Shop {
 }
 
 export interface Price {
-  usd: number;
-  ils: number;
+  USD: number;
 }

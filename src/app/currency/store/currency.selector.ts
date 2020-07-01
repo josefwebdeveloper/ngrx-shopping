@@ -12,6 +12,16 @@ export const currencyUpdated = createSelector(
   }
 );
 
+export const currentShowCurrency = createSelector(
+  selectCurrencyState,
+  (currency) => {
+    if (currency.currency) {
+      return Object.keys(currency.currency.rates)[0];
+    }
+    return 'USD'
+  }
+);
+
 export const currencySuccessTimeUpdated = createSelector(
   selectCurrencyState,
   (currency) => {

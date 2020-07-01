@@ -10,8 +10,14 @@ import {
   currencyUpdated,
   currencySuccessTimeUpdated,
 } from '../store/currency.selector';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { Currency } from '../models/currency';
+import { timeIntervalValidator } from 'src/app/shopping/utilities/timeInterval.validator';
 
 @Component({
   selector: 'app-currency',
@@ -20,11 +26,6 @@ import { Currency } from '../models/currency';
 })
 export class CurrencyComponent implements OnInit {
   currenciesList = ['ILS', 'USD'];
-
-  updateTimestamp$: Observable<string>;
-  currency$: Observable<Currency>;
-
-  currencyForm: FormGroup;
   intervalsList = [
     3000, // 3s
     10000, // 10s
@@ -36,30 +37,45 @@ export class CurrencyComponent implements OnInit {
     1800000, // 30m
   ];
 
+  updateTimestamp$: Observable<string>;
+  currency$: Observable<Currency>;
+
+  currencyForm = new FormGroup({
+    convertionCurrency: new FormControl({ value: '' }, [
+      Validators.required,
+      Validators.pattern(/^[A-Z]{3}$/),
+    ]),
+    updateInterval: new FormControl({ value: null }, [
+      Validators.min(1000),
+      timeIntervalValidator(),
+    ]),
+  });
+
   constructor(private fb: FormBuilder, private store: Store<CurrencyState>) {}
 
   ngOnInit(): void {
-    this.currencyForm = this.fb.group({
-      currency: this.fb.control(this.currenciesList[0], [
-        Validators.required,
-        Validators.pattern(/^[A-Z]{3}$/g),
-      ]),
-      updateInterval: this.fb.control(this.intervalsList[0], [])// add validator function to check values
+    this.currencyForm.valueChanges.subscribe((f) => {
+      this.store.dispatch(
+        currencyFetchStart({
+          currencyRequestParams: {
+            baseCurrencySymbol: 'USD',
+            convertionCurrencySymbol: f.convertionCurrency,
+            fetchInterval: f.updateInterval,
+          },
+        })
+      );
     });
-    this.getCurrency();
+
+    this.initFormValue();
+
     this.updateTimestamp$ = this.store.pipe(select(currencySuccessTimeUpdated));
     this.currency$ = this.store.pipe(select(currencyUpdated));
   }
 
-  getCurrency(symbols = this.currenciesList) {
-    this.store.dispatch(
-      currencyFetchStart({
-        currencyRequestParams: {
-          baseCurrencySymbol: 'USD',
-          convertionCurrencySymbol: 'ILS',
-          fetchInterval: 2000,
-        },
-      })
-    );
+  initFormValue() {
+    this.currencyForm.setValue({
+      convertionCurrency: this.currenciesList[0],
+      updateInterval: this.intervalsList[0],
+    });
   }
 }

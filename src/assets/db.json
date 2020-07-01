@@ -7,8 +7,7 @@
       "name": "shop 1"
     },
     "price": {
-      "usd": 2.17,
-      "ils": null
+      "USD": 2.17
     },
     "received": false,
     "deliveryEstDate": "2020-06-30T20:08:21.395Z"
@@ -21,8 +20,7 @@
       "name": "shop 1"
     },
     "price": {
-      "usd": 4.7,
-      "ils": null
+      "USD": 4.7
     },
     "received": false,
     "deliveryEstDate": "2020-07-02T20:08:21.395Z"
@@ -35,8 +33,7 @@
       "name": "shop 2"
     },
     "price": {
-      "usd": null,
-      "ils": 25
+      "USD": 25
     },
     "received": false,
     "deliveryEstDate": "2020-06-29T20:08:21.395Z"

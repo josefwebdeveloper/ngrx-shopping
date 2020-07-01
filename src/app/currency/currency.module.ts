@@ -7,9 +7,10 @@ import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
 import { CurrencyEffects } from './store/currency.effects';
+import { TimeIntervalPipe } from './pipes/time-interval.pipe';
 
 @NgModule({
-  declarations: [CurrencyComponent],
+  declarations: [CurrencyComponent, TimeIntervalPipe],
   imports: [
     CommonModule,
     ReactiveFormsModule,

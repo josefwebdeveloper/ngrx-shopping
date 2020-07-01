@@ -1,5 +1,8 @@
 <div class="currency-rate-container">
   <mat-chip-list *ngIf="(currency$ | async)?.date">
+    <mat-chip color="warn" selected>
+      Base Currency: USD
+    </mat-chip>
     <mat-chip color="accent" selected>
       {{ 1 | currency: (currency$ | async).base }} =
       {{ (currency$ | async).rates.ILS | currency: "ILS" }}
@@ -11,7 +14,7 @@
   <div>
     <mat-form-field>
       <mat-label>Show prices in:</mat-label>
-      <mat-select formControlName="currency">
+      <mat-select formControlName="convertionCurrency">
         <mat-option *ngFor="let symbol of currenciesList" [value]="symbol">
           {{ symbol }}
         </mat-option>
@@ -24,10 +27,9 @@
       <mat-label>Update every:</mat-label>
       <mat-select formControlName="updateInterval">
         <mat-option *ngFor="let interval of intervalsList" [value]="interval">
-          {{ interval | date: "mm:ss" }}
+          {{ interval | timeInterval }}
         </mat-option>
       </mat-select>
-      <mat-hint>seconds</mat-hint>
     </mat-form-field>
   </div>
 </form>

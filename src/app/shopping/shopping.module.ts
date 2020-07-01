@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 
 import { ShoppingRoutingModule } from './shopping-routing.module';
 import { ProductsPageComponent } from './products-page/products-page.component';
@@ -11,17 +11,19 @@ import { StoreModule } from '@ngrx/store';
 import { productsReducer } from './reducers/shopping.reducers';
 import { MaterialModule } from '../material.module';
 import { TestComponent } from './test/test.component';
+import { ConvertCurrencyPipe } from './pipes/convert-currency.pipe';
 
 
 
 @NgModule({
-  declarations: [ProductsPageComponent, ProductsListComponent, ProductComponent, TestComponent],
+  declarations: [ProductsPageComponent, ProductsListComponent, ProductComponent, TestComponent, ConvertCurrencyPipe],
   imports: [
     CommonModule,
     MaterialModule,
     ShoppingRoutingModule,
     StoreModule.forFeature('products', productsReducer),
     EffectsModule.forFeature([ShoppingEffects])
-  ]
+  ],
+  providers: [CurrencyPipe]
 })
 export class ShoppingModule { }

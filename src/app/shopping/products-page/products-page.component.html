@@ -5,7 +5,7 @@
       <mat-card-subtitle>{{ product.shop.name }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <div>Price: {{ (product.price.usd | currency: "USD") || (product.price.ils | currency: "ILS") }}</div>
+      <div>Price: {{ product.price.USD | convertCurrency: (currencyUpdated$ | async) }}</div>
       <div>
         Estimated Delivery: {{ product.deliveryEstDate | date: "dd.MM.yyyy" }}
       </div>
