@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  UrlTree,
   Resolve,
 } from '@angular/router';
-import { Observable, combineLatest, forkJoin } from 'rxjs';
-import { Product } from '../models/product';
-import { AppState } from 'src/app/reducers';
+import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { tap, first, finalize, filter, take, skipUntil } from 'rxjs/operators';
-import { loadAllProducts, loadAllShops } from '../shopping.actions';
-import { areProductsLoaded, areShopsLoaded } from '../shopping.selectors';
-import { productsReducer } from '../reducers/products.reducers';
+import { tap, first, finalize, filter } from 'rxjs/operators';
+import { loadAllProducts } from '../store/shopping.actions';
+import { areProductsLoaded } from '../store/shopping.selectors';
+import { AppState } from 'src/app/reducers';
 
 @Injectable({
   providedIn: 'root',

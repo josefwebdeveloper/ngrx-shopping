@@ -1,20 +1,10 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ChangeDetectionStrategy,
-  HostBinding,
-} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Currency } from 'src/app/currency/models/currency';
-import { Product, Shop } from '../models/product';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/reducers';
-import {
-  productReceived,
-  productDeleted,
-  shopUpdated,
-} from '../shopping.actions';
 import { Update } from '@ngrx/entity';
+import { AppState } from 'src/app/reducers';
+import { Product, Shop } from '../../models/product';
+import { productReceived, shopUpdated, productDeleted } from '../../store/shopping.actions';
 
 @Component({
   selector: 'app-products-list',
@@ -25,8 +15,6 @@ export class ProductsListComponent implements OnInit {
   @Input() currencyUpdated: Currency;
   @Input() products: Product[];
   @Input() shops: Shop[];
-
-  // @HostBinding('style.grid-template-columns') gridColumns: string;
 
   constructor(private store: Store<AppState>) {}
 
@@ -39,8 +27,6 @@ export class ProductsListComponent implements OnInit {
       received: isReceived,
     };
     const originalShop = this.shops.find((shop) => shop.id === product.shop.id);
-    console.log(originalShop);
-    console.log(product.price.USD);
 
     const updatedShop: Shop = {
       ...originalShop,

@@ -1,18 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ShoppingService } from '../shopping.service';
-import { AppState } from 'src/app/reducers';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Product, Shop } from '../models/product';
-import { selectAllProducts, selectAllShops } from '../shopping.selectors';
-import {
-  currentShowCurrency,
-  currencyUpdated,
-} from 'src/app/currency/store/currency.selector';
+import { currencyUpdated } from 'src/app/currency/store/currency.selector';
 import { Currency } from 'src/app/currency/models/currency';
-import { filter, map, switchMap, first } from 'rxjs/operators';
-import { selectCurrentRoute, selectUrl } from 'src/app/router-store';
+import { map, first } from 'rxjs/operators';
+import { selectUrl } from 'src/app/router-store';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { AppState } from 'src/app/reducers';
+import { Product, Shop } from '../../models/product';
+import { selectAllProducts, selectAllShops } from '../../store/shopping.selectors';
 
 @Component({
   selector: 'app-products-page',
@@ -68,8 +64,9 @@ export class ProductsPageComponent implements OnInit {
         this.allShops$ = this.store.pipe(
           select(selectAllShops),
           map((shops) => {
-            console.log(shops)
-            return shops.filter((shop) => shop.totalProducts > shop.totalReceivedProducts);
+            return shops.filter(
+              (shop) => shop.totalProducts > shop.totalReceivedProducts
+            );
           })
         );
       }

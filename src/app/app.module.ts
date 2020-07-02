@@ -12,14 +12,11 @@ import { environment } from '../environments/environment';
 import { CurrencyModule } from './currency/currency.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from './material.module';
-import {RouterState, StoreRouterConnectingModule} from '@ngrx/router-store';
+import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { LayoutModule } from '@angular/cdk/layout';
 
-
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,22 +26,25 @@ import { LayoutModule } from '@angular/cdk/layout';
     CurrencyModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
-      runtimeChecks : {
-          strictStateImmutability: true,
-          strictActionImmutability: true,
-          strictActionSerializability: true,
-          strictStateSerializability:true
-      }
-  }),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictActionSerializability: true,
+        strictStateSerializability: true,
+      },
+    }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot({
-        stateKey: 'router',
-        routerState: RouterState.Minimal
+      stateKey: 'router',
+      routerState: RouterState.Minimal,
     }),
-    LayoutModule
+    LayoutModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

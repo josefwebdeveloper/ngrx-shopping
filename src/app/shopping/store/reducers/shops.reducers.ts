@@ -1,6 +1,6 @@
-import { Shop } from '../models/product';
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
+import { Shop } from '../../models/product';
 import { ShoppingActions } from '../action.types';
 
 export interface ShopsState extends EntityState<Shop> {
@@ -20,7 +20,6 @@ export const shopsReducer = createReducer(
     });
   }),
   on(ShoppingActions.shopUpdated, (state, { update }) => {
-    console.log(update)
     return adapter.updateOne(update, state);
   })
 );

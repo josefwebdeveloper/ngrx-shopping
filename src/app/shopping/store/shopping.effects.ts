@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ShoppingActions } from './action.types';
-import { ShoppingService } from './shopping.service';
+import { ShoppingService } from '../shopping.service';
 import { concatMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import {
   allProductsLoaded,
@@ -9,7 +9,7 @@ import {
   loadAllShops,
   shopUpdated,
 } from './shopping.actions';
-import { AppState } from '../reducers';
+import { AppState } from '../../reducers';
 import { Store, select } from '@ngrx/store';
 import { selectAllShops } from './shopping.selectors';
 

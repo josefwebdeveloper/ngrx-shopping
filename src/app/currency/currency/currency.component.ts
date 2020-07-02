@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import {
-  currencyFetchSuccess,
-  currencyFetchStart,
-} from '../store/currency.actions';
+import { currencyFetchStart } from '../store/currency.actions';
 import { Observable } from 'rxjs';
-import { CurrencyState } from '../store/reducers';
+import { CurrencyState } from '../store/currency.reducers';
 import {
   currencyUpdated,
   currencySuccessTimeUpdated,

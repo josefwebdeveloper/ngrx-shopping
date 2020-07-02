@@ -1,15 +1,7 @@
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createSelector,
-  MetaReducer,
-  createReducer,
-  on,
-} from '@ngrx/store';
-import { environment } from '../../../../environments/environment';
-import { Currency } from '../../models/currency';
-import { CurrencyActions } from '../../store/action.types';
+import { MetaReducer, createReducer, on } from '@ngrx/store';
+import { environment } from '../../../environments/environment';
+import { Currency } from '../models/currency';
+import { CurrencyActions } from './action.types';
 
 export const currencyFeatureKey = 'currency';
 
@@ -22,7 +14,7 @@ export interface CurrencyState {
 const initialCurrencyState: CurrencyState = {
   currency: undefined,
   successTimeString: undefined,
-  currencyError: ''
+  currencyError: '',
 };
 
 export const metaReducers: MetaReducer<
@@ -34,13 +26,13 @@ export const currencyReducer = createReducer(
   on(CurrencyActions.currencyFetchSuccess, (state, action) => {
     return {
       currency: action.currency,
-      successTimeString: action.successTimeString
+      successTimeString: action.successTimeString,
     };
   }),
   on(CurrencyActions.currencyFetchFail, (state, action) => {
     return {
       ...state,
-      currencyError: action.currencyError.error
+      currencyError: action.currencyError.error,
     };
   })
 );

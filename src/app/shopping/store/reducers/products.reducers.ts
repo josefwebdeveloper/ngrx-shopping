@@ -1,8 +1,8 @@
-import { Product, Shop } from '../models/product';
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
+import { Product } from '../../models/product';
+import { compareProductsDates } from '../../utilities/compare';
 import { ShoppingActions } from '../action.types';
-import { compareProductsDates } from '../utilities/compare';
 
 export interface ProductsState extends EntityState<Product> {
   allProductsLoaded: boolean;

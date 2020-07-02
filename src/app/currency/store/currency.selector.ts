@@ -1,5 +1,5 @@
 import { createSelector, createFeatureSelector } from '@ngrx/store';
-import { CurrencyState } from '../store/reducers';
+import { CurrencyState } from './currency.reducers';
 
 export const selectCurrencyState = createFeatureSelector<CurrencyState>(
   'currency'

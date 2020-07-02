@@ -1,20 +1,11 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Product, Shop } from '../models/product';
-import { Observable, Subscription } from 'rxjs';
+import { Product, Shop } from '../../models/product';
+import { Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { selectAllShops } from '../shopping.selectors';
+import { selectAllShops } from '../../store/shopping.selectors';
+import { productAdded, shopUpdated } from '../../store/shopping.actions';
 import { AppState } from 'src/app/reducers';
-import { productAdded, shopUpdated } from '../shopping.actions';
-import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-add-product',
@@ -22,7 +13,6 @@ import { MatInput } from '@angular/material/input';
   styleUrls: ['./add-product.component.scss'],
 })
 export class AddProductComponent implements OnInit, OnDestroy {
-
   allShops$: Subscription;
   allShops: Shop[];
 
@@ -47,10 +37,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
     this.allShops$ = this.store
       .pipe(select(selectAllShops))
       .subscribe((allShops) => (this.allShops = allShops));
-
-    this.addProductForm.valueChanges.subscribe((v) => {
-      console.log(this.addProductForm);
-    });
   }
 
   onSubmit() {

@@ -1,5 +1,3 @@
-import { Observable } from 'rxjs';
-
 export interface Currency {
   rates: CurrencyRates;
   base: string;
@@ -18,6 +16,4 @@ export interface CurrencyRequestParams {
   baseCurrencySymbol: string;
   convertionCurrencySymbol: string;
   fetchInterval: number;
-  // convertionCurrencySymbol: Observable<string>;
-  // fetchInterval: Observable<number>;
 }

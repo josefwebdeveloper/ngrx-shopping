@@ -10,7 +10,7 @@
   </mat-chip-list>
 </div>
 
-<form [formGroup]="currencyForm" class="currency-form-container">
+<form [formGroup]="currencyForm">
   <div>
     <mat-form-field>
       <mat-label>Show prices in:</mat-label>
@@ -35,7 +35,7 @@
 </form>
 
 <div class="currency-container">
-  <div class="currency-update-container" *ngIf="(currency$ | async)?.date">
+  <div *ngIf="(currency$ | async)?.date">
     <div>Last Successful Update:</div>
     <div>
       {{ updateTimestamp$ | async | date: "'on' dd.MM.yyyy 'at' HH:mm:ss" }}
